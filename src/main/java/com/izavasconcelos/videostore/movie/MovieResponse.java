@@ -10,7 +10,7 @@ import lombok.Setter;
 public class MovieResponse {
 
   private Long id;
-  private String tilte;
+  private String title;
   private String director;
   private Integer totalAvailable;
 }
