@@ -6,6 +6,7 @@ import com.izavasconcelos.videostore.user.LogoutRequest;
 import com.izavasconcelos.videostore.user.UserMapper;
 import com.izavasconcelos.videostore.user.UserRequest;
 import com.izavasconcelos.videostore.user.UserResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,8 +26,10 @@ public class UserController {
   }
 
   @PostMapping
-  public UserResponse create(@RequestBody UserRequest requestBody) {
-    return userMapper.toResponse(userService.create(userMapper.toEntity(requestBody)));
+  public ResponseEntity<UserResponse> create(@RequestBody UserRequest requestBody) {
+    return userMapper.toResponse(userService.create(userMapper.toEntity(requestBody)))
+        .map(ResponseEntity::ok)
+        .orElseGet(() -> ResponseEntity.status(409).build());
   }
 
   @PutMapping("/login")

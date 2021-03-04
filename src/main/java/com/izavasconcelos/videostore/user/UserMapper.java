@@ -1,21 +1,22 @@
 package com.izavasconcelos.videostore.user;
 
 import com.izavasconcelos.videostore.model.User;
+import java.util.Optional;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserMapper {
 
-  public UserResponse toResponse(final User user) {
-    final UserResponse response = new UserResponse();
+  public Optional<UserResponse> toResponse(final Optional<User> user) {
 
-    response.setId(user.getId());
-    response.setEmail(user.getEmail());
-    response.setName(user.getName());
-    response.setLogin(user.getLogin());
-    response.setMovieId(user.getMovieId());
-
-    return response;
+    return user.map(
+        u ->
+            UserResponse.builder()
+                .id(u.getId())
+                .email(u.getEmail())
+                .name(u.getName())
+                .login(u.getLogin())
+                .build());
   }
 
   public User toEntity(final UserRequest request) {
@@ -24,7 +25,6 @@ public class UserMapper {
     user.setEmail(request.getEmail());
     user.setName(request.getName());
     user.setPassword(request.getPassword());
-    user.setMovieId(0L);
     user.setLogin(true);
 
     return user;

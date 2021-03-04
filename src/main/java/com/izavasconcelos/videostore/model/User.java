@@ -31,7 +31,4 @@ public class User {
 
   @Column(name = "login")
   private Boolean login;
-
-  @Column(name = "id_movie")
-  private Long movieId;
 }

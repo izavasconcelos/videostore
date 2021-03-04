@@ -18,14 +18,14 @@ public class UserService {
   }
 
   @Transactional
-  public User create(User user) {
+  public Optional<User> create(User user) {
 
     if (findByEmail(user.getEmail()).isPresent()) {
-      throw new UserException("User already has registration");
+      return Optional.empty();
     }
 
     try {
-      return userRepository.save(user);
+      return Optional.of(userRepository.save(user));
     } catch (DbActionExecutionException e) {
       throw new UserException("Failed to save new User", e);
     }
