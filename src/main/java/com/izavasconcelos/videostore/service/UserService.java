@@ -3,7 +3,7 @@ package com.izavasconcelos.videostore.service;
 import com.izavasconcelos.videostore.exceptions.UserException;
 import com.izavasconcelos.videostore.model.User;
 import com.izavasconcelos.videostore.repository.UserRepository;
-import java.util.List;
+import java.util.Optional;
 import org.springframework.data.relational.core.conversion.DbActionExecutionException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,11 +18,39 @@ public class UserService {
   }
 
   @Transactional
-  public User create(final User user) {
+  public User create(User user) {
+
+    if (findByEmail(user.getEmail()).isPresent()) {
+      throw new UserException("User already has registration");
+    }
+
     try {
       return userRepository.save(user);
     } catch (DbActionExecutionException e) {
       throw new UserException("Failed to save new User", e);
     }
+  }
+
+  @Transactional
+  public Optional<User> findByEmail(String email) {
+    return userRepository.findByEmail(email);
+  }
+
+  @Transactional
+  public Boolean validateLogin(String email, String password) {
+
+    Optional<User> user = userRepository.findByEmailAndPassword(email, password);
+
+    if (user.isPresent() && !user.get().getLogin()) {
+      int updateLogin = userRepository.updateLogin(email, true);
+      return updateLogin == 1;
+    }
+    return false;
+  }
+
+  @Transactional
+  public Boolean logout(String email) {
+    int rows = userRepository.updateLogin(email, false);
+    return rows == 1;
   }
 }

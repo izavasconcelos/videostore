@@ -1,7 +1,6 @@
 package com.izavasconcelos.videostore.user;
 
 import com.izavasconcelos.videostore.model.User;
-import java.util.Optional;
 import org.springframework.stereotype.Component;
 
 @Component

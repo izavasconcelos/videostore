@@ -1,9 +1,6 @@
 package com.izavasconcelos.videostore.service;
 
-import static java.util.stream.Collectors.toList;
-
 import com.izavasconcelos.videostore.model.Movie;
-import com.izavasconcelos.videostore.movie.MovieResponse;
 import com.izavasconcelos.videostore.repository.MovieRepository;
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -26,18 +23,5 @@ public class MovieService {
   @Transactional
   public List<Movie> findAll() {
     return movieRepository.findAll();
-  }
-
-  public List<MovieResponse> convertToMovieResponse(List<Movie> movieList) {
-    return movieList.stream()
-        .map(
-            movie ->
-                MovieResponse.builder()
-                    .id(movie.getId())
-                    .title(movie.getTitle())
-                    .director(movie.getDirector())
-                    .totalAvailable(movie.getAvailable() - movie.getUnavailable())
-                    .build())
-        .collect(toList());
   }
 }

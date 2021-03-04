@@ -1,6 +1,5 @@
 package com.izavasconcelos.videostore.user;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
