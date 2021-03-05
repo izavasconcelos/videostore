@@ -13,7 +13,7 @@
 ### Pesquisar filme pelo título
 > Enviar **title** como parâmetro na requisição
 ```
-GET /v1/movies/search?title=name
+GET /v1/movies/search?title=Filme%20Teste
 ```
 > Resposta: um JSON com as infos do filme ou vazio caso não encontre nenhum filme
 ```
