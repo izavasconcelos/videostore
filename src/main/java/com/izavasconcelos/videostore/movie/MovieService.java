@@ -1,4 +1,6 @@
-package com.izavasconcelos.videostore.service;
+package com.izavasconcelos.videostore.movie;
+
+import static java.util.stream.Collectors.toList;
 
 import com.izavasconcelos.videostore.model.Movie;
 import com.izavasconcelos.videostore.repository.MovieRepository;
@@ -22,6 +24,11 @@ public class MovieService {
 
   @Transactional
   public List<Movie> findAll() {
-    return movieRepository.findAll();
+
+    return movieRepository.findAll()
+        .stream()
+        .filter(movie -> movie.getAvailable() > movie.getUnavailable())
+        .collect(toList());
   }
+
 }

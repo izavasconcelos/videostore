@@ -1,8 +1,5 @@
-package com.izavasconcelos.videostore.controller;
+package com.izavasconcelos.videostore.movie;
 
-import com.izavasconcelos.videostore.movie.MovieMapper;
-import com.izavasconcelos.videostore.movie.MovieResponse;
-import com.izavasconcelos.videostore.service.MovieService;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +21,7 @@ public class MovieController {
 
   @GetMapping("/search")
   public List<MovieResponse> searchByTitle(@RequestParam("title") String title) {
-    return movieMapper.toSearchResponse(movieService.findByTitle(title));
+    return movieMapper.toResponse(movieService.findByTitle(title));
   }
 
   @GetMapping

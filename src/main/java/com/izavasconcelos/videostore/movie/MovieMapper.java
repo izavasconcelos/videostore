@@ -9,21 +9,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class MovieMapper {
 
-  public List<MovieResponse> toSearchResponse(final List<Movie> movies) {
-    return convertToMovieResponse(movies);
-  }
+  public List<MovieResponse> toResponse(final List<Movie> movieList) {
 
-  public List<MovieResponse> toResponse(final List<Movie> movies) {
-
-    List<Movie> movieList =
-        movies.stream()
-            .filter(movie -> movie.getAvailable() > movie.getUnavailable())
-            .collect(toList());
-
-    return convertToMovieResponse(movieList);
-  }
-
-  public List<MovieResponse> convertToMovieResponse(List<Movie> movieList) {
     return movieList.stream()
         .map(
             movie ->
