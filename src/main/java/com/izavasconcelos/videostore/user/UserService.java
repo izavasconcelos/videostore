@@ -20,7 +20,7 @@ public class UserService {
   @Transactional
   public Optional<User> create(User user) {
 
-    if (findByEmail(user.getEmail()).isPresent() || user.getPassword().length() < 6) {
+    if (findByEmail(user.getEmail()).isPresent()) {
       return Optional.empty();
     }
 

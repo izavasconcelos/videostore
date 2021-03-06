@@ -1,4 +1,4 @@
-package com.izavasconcelos.videostore.service;
+package com.izavasconcelos.videostore.rent;
 
 import com.izavasconcelos.videostore.model.Movie;
 import com.izavasconcelos.videostore.model.Rent;

@@ -2,6 +2,7 @@ package com.izavasconcelos.videostore.user;
 
 import static org.springframework.http.ResponseEntity.status;
 
+import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -22,7 +23,7 @@ public class UserController {
   }
 
   @PostMapping
-  public ResponseEntity<UserResponse> create(@RequestBody UserRequest requestBody) {
+  public ResponseEntity<UserResponse> create(@RequestBody @Valid UserRequest requestBody) {
     return userMapper
         .toResponse(userService.create(userMapper.toEntity(requestBody)))
         .map(ResponseEntity::ok)
@@ -30,7 +31,7 @@ public class UserController {
   }
 
   @PutMapping("/login")
-  public ResponseEntity<UserResponse> login(@RequestBody LoginRequest requestBody) {
+  public ResponseEntity<UserResponse> login(@RequestBody @Valid LoginRequest requestBody) {
     return userMapper
         .toResponse(userService.login(requestBody.getEmail(), requestBody.getPassword()))
         .map(ResponseEntity::ok)
@@ -38,7 +39,7 @@ public class UserController {
   }
 
   @PutMapping("/logout")
-  public ResponseEntity<UserResponse> logout(@RequestBody LogoutRequest requestBody) {
+  public ResponseEntity<UserResponse> logout(@RequestBody @Valid LogoutRequest requestBody) {
     return userMapper
         .toResponse(userService.logout(requestBody.getEmail()))
         .map(ResponseEntity::ok)

@@ -1,9 +1,7 @@
-package com.izavasconcelos.videostore.controller;
+package com.izavasconcelos.videostore.rent;
 
 import com.izavasconcelos.videostore.model.Rent;
-import com.izavasconcelos.videostore.rent.RentMapper;
-import com.izavasconcelos.videostore.rent.RentRequest;
-import com.izavasconcelos.videostore.service.RentService;
+import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,14 +22,14 @@ public class RentController {
   }
 
   @PostMapping
-  public ResponseEntity<Rent> createRent(@RequestBody RentRequest requestBody) {
+  public ResponseEntity<Rent> createRent(@RequestBody @Valid RentRequest requestBody) {
     return rentService.rentMovie(rentMapper.toEntity(requestBody))
         .map(ResponseEntity::ok)
         .orElseGet(() -> ResponseEntity.badRequest().build());
   }
 
   @DeleteMapping
-  public ResponseEntity<Rent> deleteRent(@RequestBody RentRequest requestBody) {
+  public ResponseEntity<Rent> deleteRent(@RequestBody @Valid RentRequest requestBody) {
     return rentService.devolveMovie(rentMapper.toEntity(requestBody))
         .map(ResponseEntity::ok)
         .orElseGet(() -> ResponseEntity.badRequest().build());
