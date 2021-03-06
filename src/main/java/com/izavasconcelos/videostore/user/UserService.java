@@ -1,4 +1,4 @@
-package com.izavasconcelos.videostore.service;
+package com.izavasconcelos.videostore.user;
 
 import com.izavasconcelos.videostore.exceptions.UserException;
 import com.izavasconcelos.videostore.model.User;
@@ -20,7 +20,7 @@ public class UserService {
   @Transactional
   public Optional<User> create(User user) {
 
-    if (findByEmail(user.getEmail()).isPresent()) {
+    if (findByEmail(user.getEmail()).isPresent() || user.getPassword().length() < 6) {
       return Optional.empty();
     }
 

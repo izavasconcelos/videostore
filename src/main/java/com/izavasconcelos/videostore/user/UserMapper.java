@@ -9,8 +9,7 @@ public class UserMapper {
 
   public Optional<UserResponse> toResponse(final Optional<User> user) {
 
-    return user.map(
-        u ->
+    return user.map(u ->
             UserResponse.builder()
                 .email(u.getEmail())
                 .logged(u.getLogged())
@@ -18,13 +17,12 @@ public class UserMapper {
   }
 
   public User toEntity(final UserRequest request) {
-    final User user = new User();
 
-    user.setEmail(request.getEmail());
-    user.setName(request.getName());
-    user.setPassword(request.getPassword());
-    user.setLogged(true);
-
-    return user;
+    return User.builder()
+        .email(request.getEmail())
+        .name(request.getName())
+        .password(request.getPassword())
+        .logged(true)
+        .build();
   }
 }

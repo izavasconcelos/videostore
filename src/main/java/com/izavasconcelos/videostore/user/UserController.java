@@ -1,13 +1,7 @@
-package com.izavasconcelos.videostore.controller;
+package com.izavasconcelos.videostore.user;
 
 import static org.springframework.http.ResponseEntity.status;
 
-import com.izavasconcelos.videostore.service.UserService;
-import com.izavasconcelos.videostore.user.LoginRequest;
-import com.izavasconcelos.videostore.user.LogoutRequest;
-import com.izavasconcelos.videostore.user.UserMapper;
-import com.izavasconcelos.videostore.user.UserRequest;
-import com.izavasconcelos.videostore.user.UserResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -32,7 +26,7 @@ public class UserController {
     return userMapper
         .toResponse(userService.create(userMapper.toEntity(requestBody)))
         .map(ResponseEntity::ok)
-        .orElseGet(() -> status(409).build());
+        .orElseGet(() -> ResponseEntity.badRequest().build());
   }
 
   @PutMapping("/login")

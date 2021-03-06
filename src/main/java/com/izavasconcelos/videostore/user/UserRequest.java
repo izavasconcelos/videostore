@@ -1,6 +1,8 @@
 package com.izavasconcelos.videostore.user;
 
 import javax.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,7 +10,9 @@ import org.hibernate.validator.constraints.Length;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class UserRequest {
 
   @NotNull(message = "Email is required")
@@ -20,6 +24,6 @@ public class UserRequest {
   private String name;
 
   @NotNull(message = "Password is required")
-  @Length(max = 20, message = "Password can not have more the 20 characters")
+  @Length(min = 6, max = 20, message = "Password can not have less then 6 and more then 20 characters")
   private String password;
 }
