@@ -37,20 +37,18 @@ public class UserService {
   }
 
   @Transactional
-  public Boolean validateLogin(String email, String password) {
+  public Optional<User> login(String email, String password) {
 
-    Optional<User> user = userRepository.findByEmailAndPassword(email, password);
+    userRepository.updateLogin(email, password,true);
 
-    if (user.isPresent() && !user.get().getLogin()) {
-      int updateLogin = userRepository.updateLogin(email, true);
-      return updateLogin == 1;
-    }
-    return false;
+    return findByEmail(email);
   }
 
   @Transactional
-  public Boolean logout(String email) {
-    int rows = userRepository.updateLogin(email, false);
-    return rows == 1;
+  public Optional<User> logout(String email) {
+
+    userRepository.updateLogout(email, false);
+
+    return findByEmail(email);
   }
 }

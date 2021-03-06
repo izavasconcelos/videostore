@@ -12,10 +12,8 @@ public class UserMapper {
     return user.map(
         u ->
             UserResponse.builder()
-                .id(u.getId())
                 .email(u.getEmail())
-                .name(u.getName())
-                .login(u.getLogin())
+                .logged(u.getLogged())
                 .build());
   }
 
@@ -25,7 +23,7 @@ public class UserMapper {
     user.setEmail(request.getEmail());
     user.setName(request.getName());
     user.setPassword(request.getPassword());
-    user.setLogin(true);
+    user.setLogged(true);
 
     return user;
   }

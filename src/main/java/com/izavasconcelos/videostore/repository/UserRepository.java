@@ -16,6 +16,10 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long> {
   Optional<User> findByEmailAndPassword(String email, String password);
 
   @Modifying
-  @Query(value = " update users  set login = :login where email = :email ", nativeQuery = true)
-  int updateLogin(@Param("email") String email, @Param("login") boolean login);
+  @Query(value = " update users  set logged = :logged where email = :email and password = :password ", nativeQuery = true)
+  int updateLogin(@Param("email") String email, @Param("password") String password, @Param("logged") boolean logged);
+
+  @Modifying
+  @Query(value = " update users  set logged = :logged where email = :email ", nativeQuery = true)
+  int updateLogout(@Param("email") String email, @Param("logged") boolean logged);
 }

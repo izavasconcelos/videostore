@@ -38,7 +38,7 @@ public class RentService {
     boolean isUserLogin =
         userRepository
             .findByEmail(entity.getEmail())
-            .filter(User::getLogin)
+            .filter(User::getLogged)
             .isPresent();
 
     Optional<Movie> movie = movieRepository.findById(entity.getMovieId());
@@ -66,7 +66,7 @@ public class RentService {
     boolean isUserLogin =
         userRepository
             .findByEmail(rent.getEmail())
-            .filter(User::getLogin)
+            .filter(User::getLogged)
             .isPresent();
 
     Optional<Movie> movie = movieRepository.findById(rent.getMovieId());

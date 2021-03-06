@@ -1,5 +1,7 @@
 package com.izavasconcelos.videostore.controller;
 
+import static org.springframework.http.ResponseEntity.status;
+
 import com.izavasconcelos.videostore.service.UserService;
 import com.izavasconcelos.videostore.user.LoginRequest;
 import com.izavasconcelos.videostore.user.LogoutRequest;
@@ -27,18 +29,25 @@ public class UserController {
 
   @PostMapping
   public ResponseEntity<UserResponse> create(@RequestBody UserRequest requestBody) {
-    return userMapper.toResponse(userService.create(userMapper.toEntity(requestBody)))
+    return userMapper
+        .toResponse(userService.create(userMapper.toEntity(requestBody)))
         .map(ResponseEntity::ok)
-        .orElseGet(() -> ResponseEntity.status(409).build());
+        .orElseGet(() -> status(409).build());
   }
 
   @PutMapping("/login")
-  public Boolean login(@RequestBody LoginRequest requestBody) {
-    return userService.validateLogin(requestBody.getEmail(), requestBody.getPassword());
+  public ResponseEntity<UserResponse> login(@RequestBody LoginRequest requestBody) {
+    return userMapper
+        .toResponse(userService.login(requestBody.getEmail(), requestBody.getPassword()))
+        .map(ResponseEntity::ok)
+        .orElseGet(() -> ResponseEntity.notFound().build());
   }
 
   @PutMapping("/logout")
-  public Boolean logout(@RequestBody LogoutRequest requestBody) {
-    return userService.logout(requestBody.getEmail());
+  public ResponseEntity<UserResponse> logout(@RequestBody LogoutRequest requestBody) {
+    return userMapper
+        .toResponse(userService.logout(requestBody.getEmail()))
+        .map(ResponseEntity::ok)
+        .orElseGet(() -> ResponseEntity.notFound().build());
   }
 }

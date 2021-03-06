@@ -55,7 +55,7 @@ DO $$
             	email VARCHAR(100) NOT NULL UNIQUE,
             	name VARCHAR(150) NOT NULL,
             	password VARCHAR(20) NOT NULL,
-            	login BOOLEAN NOT NULL
+            	logged BOOLEAN NOT NULL
             );
 
             RAISE NOTICE 'table users created.';

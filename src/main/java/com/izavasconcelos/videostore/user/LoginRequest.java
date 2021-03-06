@@ -10,10 +10,10 @@ import org.hibernate.validator.constraints.Length;
 public class LoginRequest {
 
   @NotNull(message = "Email is required")
-  @Length(max = 100, message = "Email can not have more the 100 characters")
+  @Length(max = 100, message = "Email can not have more then 100 characters")
   private String email;
 
   @NotNull(message = "Password is required")
-  @Length(max = 20, message = "Password can not have more the 20 characters")
+  @Length(max = 20, message = "Password can not have more then 20 characters")
   private String password;
 }
