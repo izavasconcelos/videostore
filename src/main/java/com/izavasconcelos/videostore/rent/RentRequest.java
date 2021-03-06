@@ -10,10 +10,10 @@ import org.hibernate.validator.constraints.Length;
 public class RentRequest {
 
   @NotNull(message = "Email is required")
-  @Length(max = 100, message = "Email can not have more the 100 characters")
+  @Length(max = 100, message = "Email can not have more then 100 characters")
   private String email;
 
   @NotNull(message = "Id movie is required")
-  @Length(min = 1, message = "Email can not have more the 100 characters")
+  @Length(min = 1, message = "Id movie can not be 0 or less")
   private Long movieId;
 }

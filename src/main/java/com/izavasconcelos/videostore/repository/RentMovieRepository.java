@@ -19,4 +19,8 @@ public interface RentMovieRepository extends PagingAndSortingRepository<Rent, Lo
     @Modifying
     @Query(value = " INSERT INTO rented_movie (email, id_movie) VALUES(:email, :movieId) ", nativeQuery = true)
     int saveRent(@Param("email") String email, @Param("movieId") Long movieId);
+
+    @Modifying
+    @Query(value = " DELETE FROM rented_movie WHERE email=:email AND id_movie=:movieId ", nativeQuery = true)
+    int deleteRent(@Param("email") String email, @Param("movieId") Long movieId);
 }

@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class RentService {
 
+  private static final  Integer ONE_MOVIE = 1;
   private final RentMovieRepository rentRepository;
   private final UserRepository userRepository;
   private final MovieRepository movieRepository;
@@ -27,13 +28,13 @@ public class RentService {
   }
 
   @Transactional
-  public Optional<String> rentMovie(Rent entity) {
+  public Optional<Rent> rentMovie(Rent entity) {
 
-    boolean isDuplicated =
+    boolean isNotDuplicated =
         rentRepository
             .findByEmailAndMovieId(entity.getEmail(), entity.getMovieId())
             .isEmpty();
-//  tá ambiguo aqui **
+
     boolean isUserLogin =
         userRepository
             .findByEmail(entity.getEmail())
@@ -46,41 +47,40 @@ public class RentService {
             .filter(m -> m.getAvailable() > m.getUnavailable())
             .isPresent();
 
-    if (isMovieAvailable && isUserLogin && !isDuplicated) {
+    if (isMovieAvailable && isUserLogin && isNotDuplicated) {
       rentRepository.saveRent(entity.getEmail(), entity.getMovieId());
-      movieRepository.update(movie.get().getUnavailable()+1, entity.getMovieId());
-      return Optional.of("{\n\"message\": \"movie successfully rented\" \n}");
+      movieRepository.update(movie.get().getUnavailable() + ONE_MOVIE, entity.getMovieId());
+      return Optional.of(entity);
     }
 
-    return Optional.of("{\n\"message\": \"movie unavailable or user not found\" \n}");
+    return Optional.empty();
   }
 
   @Transactional
-  public Optional<String> devolveMovie(Rent entity) {
-    boolean findEmail =
+  public Optional<Rent> devolveMovie(Rent rent) {
+    boolean isNotRented =
         rentRepository
-            .findByEmailAndMovieId(entity.getEmail(), entity.getMovieId())
-            .stream()
-            .anyMatch(email -> email.getEmail().equals(entity.getEmail()));
+            .findByEmailAndMovieId(rent.getEmail(), rent.getMovieId())
+            .isEmpty();
 
     boolean isUserLogin =
         userRepository
-            .findByEmail(entity.getEmail())
+            .findByEmail(rent.getEmail())
             .filter(User::getLogin)
             .isPresent();
 
-    Optional<Movie> movie = movieRepository.findById(entity.getMovieId());
+    Optional<Movie> movie = movieRepository.findById(rent.getMovieId());
 
-    boolean isMovieAvailable = movie
-        .filter(m -> m.getAvailable() > m.getUnavailable())
+    boolean movieExists = movie
+        .filter(m -> m.getUnavailable() > 0)
         .isPresent();
 
-    if (isMovieAvailable && isUserLogin && findEmail) {
-      rentRepository.saveRent(entity.getEmail(), entity.getMovieId());
-      movieRepository.update(movie.get().getUnavailable()+1, entity.getMovieId());
-      return Optional.of("{\n\"message\": \"movie successfully rented\" \n}");
+    if (movieExists && isUserLogin && !isNotRented) {
+      rentRepository.deleteRent(rent.getEmail(), rent.getMovieId());
+      movieRepository.update(movie.get().getUnavailable() - ONE_MOVIE, rent.getMovieId());
+      return Optional.of(rent);
     }
 
-    return Optional.of("{\n\"message\": \"movie unavailable or user not found\" \n}");
+    return Optional.empty();
   }
 }

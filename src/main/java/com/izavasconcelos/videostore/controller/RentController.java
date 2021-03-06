@@ -1,5 +1,6 @@
 package com.izavasconcelos.videostore.controller;
 
+import com.izavasconcelos.videostore.model.Rent;
 import com.izavasconcelos.videostore.rent.RentMapper;
 import com.izavasconcelos.videostore.rent.RentRequest;
 import com.izavasconcelos.videostore.service.RentService;
@@ -23,17 +24,16 @@ public class RentController {
   }
 
   @PostMapping
-  public ResponseEntity<String> createRent(@RequestBody RentRequest requestBody) {
+  public ResponseEntity<Rent> createRent(@RequestBody RentRequest requestBody) {
     return rentService.rentMovie(rentMapper.toEntity(requestBody))
         .map(ResponseEntity::ok)
         .orElseGet(() -> ResponseEntity.badRequest().build());
   }
 
   @DeleteMapping
-  public ResponseEntity<String> deleteRent(@RequestBody RentRequest requestBody) {
+  public ResponseEntity<Rent> deleteRent(@RequestBody RentRequest requestBody) {
     return rentService.devolveMovie(rentMapper.toEntity(requestBody))
         .map(ResponseEntity::ok)
         .orElseGet(() -> ResponseEntity.badRequest().build());
   }
-
 }
