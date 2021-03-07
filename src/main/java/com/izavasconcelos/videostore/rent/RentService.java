@@ -35,7 +35,7 @@ public class RentService {
             .findByEmailAndMovieId(entity.getEmail(), entity.getMovieId())
             .isEmpty();
 
-    boolean isUserLogin =
+    boolean isUserLogged =
         userRepository
             .findByEmail(entity.getEmail())
             .filter(User::getLogged)
@@ -47,7 +47,7 @@ public class RentService {
             .filter(m -> m.getAvailable() > m.getUnavailable())
             .isPresent();
 
-    if (isMovieAvailable && isUserLogin && isNotDuplicated) {
+    if (isMovieAvailable && isUserLogged && isNotDuplicated) {
       rentRepository.saveRent(entity.getEmail(), entity.getMovieId());
       movieRepository.update(movie.get().getUnavailable() + ONE_MOVIE, entity.getMovieId());
       return Optional.of(entity);
@@ -63,7 +63,7 @@ public class RentService {
             .findByEmailAndMovieId(rent.getEmail(), rent.getMovieId())
             .isEmpty();
 
-    boolean isUserLogin =
+    boolean isUserLogged =
         userRepository
             .findByEmail(rent.getEmail())
             .filter(User::getLogged)
@@ -75,7 +75,7 @@ public class RentService {
         .filter(m -> m.getUnavailable() > 0)
         .isPresent();
 
-    if (movieExists && isUserLogin && !isNotRented) {
+    if (movieExists && isUserLogged && !isNotRented) {
       rentRepository.deleteRent(rent.getEmail(), rent.getMovieId());
       movieRepository.update(movie.get().getUnavailable() - ONE_MOVIE, rent.getMovieId());
       return Optional.of(rent);
