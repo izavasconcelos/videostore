@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RentMovieRepository extends PagingAndSortingRepository<Rent, Long> {
+public interface RentRepository extends PagingAndSortingRepository<Rent, Long> {
 
     List<Rent> findByEmailAndMovieId(String email, Long movieId);
 

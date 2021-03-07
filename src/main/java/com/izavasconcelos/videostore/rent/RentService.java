@@ -4,7 +4,7 @@ import com.izavasconcelos.videostore.model.Movie;
 import com.izavasconcelos.videostore.model.Rent;
 import com.izavasconcelos.videostore.model.User;
 import com.izavasconcelos.videostore.repository.MovieRepository;
-import com.izavasconcelos.videostore.repository.RentMovieRepository;
+import com.izavasconcelos.videostore.repository.RentRepository;
 import com.izavasconcelos.videostore.repository.UserRepository;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
@@ -14,12 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class RentService {
 
   private static final  Integer ONE_MOVIE = 1;
-  private final RentMovieRepository rentRepository;
+  private final RentRepository rentRepository;
   private final UserRepository userRepository;
   private final MovieRepository movieRepository;
 
   public RentService(
-      RentMovieRepository rentRepository,
+      RentRepository rentRepository,
       UserRepository userRepository,
       MovieRepository movieRepository) {
     this.rentRepository = rentRepository;

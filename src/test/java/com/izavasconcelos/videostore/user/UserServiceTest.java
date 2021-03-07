@@ -17,7 +17,6 @@ import com.izavasconcelos.videostore.repository.UserRepository;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.data.relational.core.conversion.DbActionExecutionException;
 
 public class UserServiceTest {
 
@@ -69,22 +68,6 @@ public class UserServiceTest {
     assertFalse(result.isPresent());
   }
 
-  @Test
-  public void shouldTryToCreateUserWithInvalidPassword() {
-    User userMock = buildUser();
-
-    userMock.setPassword("123");
-
-    when(mockUserRepository.save(userMock)).thenReturn(userMock);
-
-    Optional<User> result = userService.create(userMock);
-
-    verify(mockUserRepository, times(1)).findByEmail(userMock.getEmail());
-
-    verify(mockUserRepository, never()).save(userMock);
-
-    assertFalse(result.isPresent());
-  }
 
   @Test
   public void shouldThrowExceptionWhenCreateNewUser() {
