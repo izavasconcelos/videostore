@@ -18,10 +18,10 @@ public class RentService {
   private final UserRepository userRepository;
   private final MovieRepository movieRepository;
 
-  public RentService(
-      RentRepository rentRepository,
-      UserRepository userRepository,
-      MovieRepository movieRepository) {
+  public RentService(RentRepository rentRepository,
+                     UserRepository userRepository,
+                     MovieRepository movieRepository) {
+
     this.rentRepository = rentRepository;
     this.userRepository = userRepository;
     this.movieRepository = movieRepository;
@@ -58,6 +58,7 @@ public class RentService {
 
   @Transactional
   public Optional<Rent> devolveMovie(Rent rent) {
+
     boolean isNotRented =
         rentRepository
             .findByEmailAndMovieId(rent.getEmail(), rent.getMovieId())

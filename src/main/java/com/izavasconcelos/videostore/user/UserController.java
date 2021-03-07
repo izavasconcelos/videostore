@@ -1,7 +1,5 @@
 package com.izavasconcelos.videostore.user;
 
-import static org.springframework.http.ResponseEntity.status;
-
 import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

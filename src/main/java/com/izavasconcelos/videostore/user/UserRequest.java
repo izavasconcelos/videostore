@@ -24,6 +24,6 @@ public class UserRequest {
   private String name;
 
   @NotNull(message = "Password is required")
-  @Length(min = 6, max = 20, message = "Password can not have less then 6 and more then 20 characters")
+  @Length(min = 6, max = 20, message = "Password can't have less then 6 and more the 20 characters")
   private String password;
 }

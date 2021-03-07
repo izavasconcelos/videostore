@@ -68,7 +68,6 @@ public class UserServiceTest {
     assertFalse(result.isPresent());
   }
 
-
   @Test
   public void shouldThrowExceptionWhenCreateNewUser() {
     User userMock = buildUser();

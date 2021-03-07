@@ -16,6 +16,8 @@ public interface MovieRepository extends PagingAndSortingRepository<Movie, Long>
   List<Movie> findAll();
 
   @Modifying
-  @Query(value = " update movies set unavailable = :unavailable where id = :movieId ", nativeQuery = true)
+  @Query(
+      value = " update movies set unavailable = :unavailable where id = :movieId ",
+      nativeQuery = true)
   int update(@Param("unavailable") int unavailable, @Param("movieId") Long movieId);
 }

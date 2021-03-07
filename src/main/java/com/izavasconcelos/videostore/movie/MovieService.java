@@ -30,5 +30,4 @@ public class MovieService {
         .filter(movie -> movie.getAvailable() > movie.getUnavailable())
         .collect(toList());
   }
-
 }

@@ -12,15 +12,21 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RentRepository extends PagingAndSortingRepository<Rent, Long> {
 
-    List<Rent> findByEmailAndMovieId(String email, Long movieId);
+  List<Rent> findByEmailAndMovieId(String email, Long movieId);
 
-    Optional<Rent> findById(Long id);
+  Optional<Rent> findById(Long id);
 
-    @Modifying
-    @Query(value = " INSERT INTO rented_movie (email, id_movie) VALUES(:email, :movieId) ", nativeQuery = true)
-    int saveRent(@Param("email") String email, @Param("movieId") Long movieId);
+  @Modifying
+  @Query(
+      value = " INSERT INTO rented_movie (email, id_movie) VALUES(:email, :movieId) ",
+      nativeQuery = true)
+  int saveRent(@Param("email") String email,
+               @Param("movieId") Long movieId);
 
-    @Modifying
-    @Query(value = " DELETE FROM rented_movie WHERE email=:email AND id_movie=:movieId ", nativeQuery = true)
-    int deleteRent(@Param("email") String email, @Param("movieId") Long movieId);
+  @Modifying
+  @Query(
+      value = " DELETE FROM rented_movie WHERE email=:email AND id_movie=:movieId ",
+      nativeQuery = true)
+  int deleteRent(@Param("email") String email,
+                 @Param("movieId") Long movieId);
 }
