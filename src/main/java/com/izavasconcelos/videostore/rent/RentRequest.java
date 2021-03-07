@@ -20,6 +20,5 @@ public class RentRequest {
   private String email;
 
   @NotNull(message = "Id movie is required")
-  @Length(min = 1, message = "Id movie can not be 0")
   private Long movieId;
 }

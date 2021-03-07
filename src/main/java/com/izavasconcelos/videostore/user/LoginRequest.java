@@ -14,6 +14,6 @@ public class LoginRequest {
   private String email;
 
   @NotNull(message = "Password is required")
-  @Length(max = 20, message = "Password can not have more then 20 characters")
+  @Length(min = 6, max = 20, message = "Password can not have more then 20 characters")
   private String password;
 }
