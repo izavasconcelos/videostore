@@ -25,16 +25,16 @@
 
 - **movies** (id, title, director, available, unavailable):
   Responsável por guardar as informações dos filmes da locadora
-  
+
 
 - **users** (id,	email, name, password, logged):
   Responsável por guardar as informações dos usuários da locadora
-  
+
 
 - **rent_movie** (email,	id_movie):
   Responsável por guardar as informações dos filmes locados
-  
-  
+
+
 Após a criação completa do BD é necessário configurar o *application.properties* com os dados do seu banco
 ```
 PATH: ~/src/main/resources/application.properties
@@ -51,30 +51,31 @@ spring.datasource.password=sua_senha
 ## Utilizando a aplicação:
 
 É possível fazer 7 requisições para a aplicação:
-> - Pesquisar um filme pelo título
->>GET /v1/movies/search?title=Filme%20Teste
-> ###
-> - Listar todos os filmes disponíveis para locação
->>GET /v1/movies
-> ###
-> - Criar um novo usuário
->>POST /v1/user
-> ###
-> - Fazer login de um usuário cadastrado
->>PUT /v1/user/login
-> ###
-> - Fazer logout de um usuário cadastrado
->>PUT /v1/user/logout
-> ###
-> - Alugar um filme disponível
->>POST /v1/rent
-> ###
-> - Devolver um filme alugado
->>DEL /v1/rent
+- Pesquisar um filme pelo título
+>GET /v1/movies/search?title=Filme%20Teste
+###
+- Listar todos os filmes disponíveis para locação
+>GET /v1/movies
+###
+- Criar um novo usuário
+>POST /v1/user
+###
+- Fazer login de um usuário cadastrado
+>PUT /v1/user/login
+###
+- Fazer logout de um usuário cadastrado
+>PUT /v1/user/logout
+###
+- Alugar um filme disponível
+>POST /v1/rent
+###
+- Devolver um filme alugado
+>DEL /v1/rent
 
 
 vv  **Abaixo mais detalhes de como utilizar cada requisição.** vv
 ###
+
 - ### Pesquisar filme pelo título (retorna também os indisponíveis)
 > Enviar **title** como parâmetro na requisição. Ex:
 ```
@@ -118,6 +119,7 @@ GET /v1/movies
 ```
 *Caso não exista filmes disponíveis retornará uma lista vazia.*
 
+
 ###
 - ### Criando um usuário
 > Enviar uma request param pelo body com email, name e password. Ex:
@@ -138,6 +140,7 @@ POST /v1/user
     "logged": true
 }
 ````
+
 
 ### Importante:
 - **email** não pode ser nulo e nem ter mais que 100 caracteres.
@@ -167,6 +170,7 @@ PUT /v1/user/login
 }
 ```
 
+
 ### Importante:
 - **email** não pode ser nulo e nem ter mais que 100 caracteres.
 - **password** não pode ser nulo e nem ter menos que 6 ou mais que 20 caracteres.
@@ -193,12 +197,14 @@ PUT /v1/user/logout
 }
 ```
 
+
 ### Importante:
 - **email** não pode ser nulo e nem ter mais que 100 caracteres.
 
 *Caso a validação acima não seja respeitada retorna como resposta status code 400 (Bad Request).*
 
 *Caso o usuário não seja cadastrado retorna como resposta status code 404 (Not Found).*
+
 
 ###
 - ### Locando um filme
@@ -235,6 +241,7 @@ POST /v1/rent
 
 *Caso o filme não exista ou não esteja disponível retorna como resposta status code 400 (Bad Request).*
 
+
 ###
 - ### Devolvendo um filme
 > Enviar uma request param pelo body com email e id do filme (movieId) para ser devolvido. Ex:
@@ -255,6 +262,7 @@ DEL /v1/rent
 }
 ```
 
+
 ### Importante:
 - **email** não pode ser nulo e nem ter mais que 100 caracteres.
 - **movieId** não pode ser nulo.
@@ -268,6 +276,7 @@ DEL /v1/rent
 *Caso o usuário não esteja logado retorna como resposta status code 400 (Bad Request).*
 
 *Caso o filme não exista retorna como resposta status code 400 (Bad Request).*
+
 
 ###
 ### POSTMAN
